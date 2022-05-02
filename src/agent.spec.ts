@@ -51,6 +51,14 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: mockContractAddress,
       } as any);
+      const mockArgumentsEvent = {
+        args: {
+          from: "0x0000000000000000000000000000000000000000",
+          to: DEPLOYER,
+        },
+      };
+
+      mockTxEvent.filterLog = jest.fn().mockReturnValue([mockArgumentsEvent]);
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([
