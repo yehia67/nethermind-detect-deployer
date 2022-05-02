@@ -25,7 +25,8 @@ const handleTransaction: HandleTransaction = async (
     txEvent.contractAddress &&
     txEvent.contractAddress?.length > 0
   ) {
-    // filter the transaction logs for agent erc721 transfer
+
+    // Make sure the agent ERC721 token has been minted
     const erc721TransferEvents = txEvent.filterLog(ERC721_TRANSFER_EVENT);
 
     erc721TransferEvents.forEach((transferEvent) => {
