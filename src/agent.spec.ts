@@ -6,10 +6,10 @@ import {
   createTransactionEvent,
   ethers,
 } from "forta-agent";
-import agent, { DEPLOYER } from "./agent";
+import agent, { DEPLOYER,CONTRACT_ADDRESS } from "./agent";
 
 const mockNotDeployerAddress = "0x7C71a3D85a8d620EeaB9339cCE776Ddc14a8129C";
-const mockContractAddress = "0x55d398326f99059ff775485246999027b3197955";
+const mockContractAddress = CONTRACT_ADDRESS;
 
 describe("Nethermind deployer deploy a new bot", () => {
   let handleTransaction: HandleTransaction;

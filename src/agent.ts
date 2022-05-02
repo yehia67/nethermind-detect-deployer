@@ -7,16 +7,18 @@ import {
 } from "forta-agent";
 
 export const DEPLOYER = "0x88dC3a2284FA62e0027d6D6B1fCfDd2141a143b8";
-export const ERC721_TRANSFER_EVENT =
-  "event Transfer(address indexed from, address indexed to, uint256 tokenId)";
+export const CONTRACT_ADDRESS = "0x61447385b019187daa48e91c55c02af1f1f3f863";
+
 const handleTransaction: HandleTransaction = async (
   txEvent: TransactionEvent
 ) => {
   const findings: Finding[] = [];
 
-  const isDeployer = DEPLOYER === txEvent.transaction.from;
+  const isDeployerAndContractAddress =
+    DEPLOYER === txEvent.transaction.from &&
+    CONTRACT_ADDRESS === txEvent.contractAddress;
 
-  if (!isDeployer) return findings;
+  if (!isDeployerAndContractAddress) return findings;
 
   const methodID = "0x7935d5b4";
   if (methodID === txEvent.transaction.data.slice(0, 10)) {
