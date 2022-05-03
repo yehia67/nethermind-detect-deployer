@@ -4,8 +4,13 @@ import {
   Finding,
   HandleTransaction,
   createTransactionEvent,
+  ethers,
 } from "forta-agent";
-import agent, { DEPLOYER, CONTRACT_ADDRESS, provideHandleTransaction } from "./agent";
+import agent, {
+  DEPLOYER,
+  CONTRACT_ADDRESS,
+  provideHandleTransaction,
+} from "./agent";
 
 const mockNotDeployerAddress = "0x7C71a3D85a8d620EeaB9339cCE776Ddc14a8129C";
 
@@ -31,7 +36,10 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: "",
       } as any);
-      handleTransaction = provideHandleTransaction(mockNotDeployerAddress, CONTRACT_ADDRESS);
+      handleTransaction = provideHandleTransaction(
+        mockNotDeployerAddress,
+        CONTRACT_ADDRESS
+      );
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([]);
@@ -73,6 +81,24 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: CONTRACT_ADDRESS,
       } as any);
+      const mockMintTransferEvent = {
+        args: {
+          from: "0x0000000000000000000000000000000000000000",
+          to: DEPLOYER,
+          value: ethers.BigNumber.from("20000000000"), //20k with 6 decimals
+        },
+      };
+      const mockUpdatedAgentEvent = {
+        args: {
+          agentId: 1,
+          by: DEPLOYER,
+          metadata: "",
+          chainIds: [1],
+        },
+      };
+      mockTxEvent.filterLog = jest
+        .fn()
+        .mockReturnValue([mockMintTransferEvent, mockUpdatedAgentEvent]);
 
       handleTransaction = provideHandleTransaction(DEPLOYER, CONTRACT_ADDRESS);
       const findings = await handleTransaction(mockTxEvent);
@@ -85,7 +111,7 @@ describe("Nethermind deployer deploy a new bot", () => {
           type: FindingType.Info,
           severity: FindingSeverity.Info,
           metadata: {
-            contractAddress: CONTRACT_ADDRESS,
+            agentId: "1",
           },
         }),
       ]);
