@@ -50,10 +50,6 @@ export const provideHandleTransaction = (
 
     updatedAgentEvents.forEach((transferEvent) => {
       const { agentId, by } = transferEvent.args;
-      console.log(
-        "by === DEPLOYER && isMintTransactionSubmitted",
-        by === DEPLOYER && isMintTransactionSubmitted
-      );
       if (by === DEPLOYER && isMintTransactionSubmitted) {
         findings.push(
           Finding.fromObject({
