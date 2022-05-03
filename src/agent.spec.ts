@@ -5,7 +5,7 @@ import {
   HandleTransaction,
   createTransactionEvent,
 } from "forta-agent";
-import agent, { DEPLOYER, CONTRACT_ADDRESS } from "./agent";
+import agent, { DEPLOYER, CONTRACT_ADDRESS, provideHandleTransaction } from "./agent";
 
 const mockNotDeployerAddress = "0x7C71a3D85a8d620EeaB9339cCE776Ddc14a8129C";
 
@@ -31,6 +31,7 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: "",
       } as any);
+      handleTransaction = provideHandleTransaction(mockNotDeployerAddress, CONTRACT_ADDRESS);
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([]);
@@ -44,6 +45,7 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: "",
       } as any);
+      handleTransaction = provideHandleTransaction(DEPLOYER, CONTRACT_ADDRESS);
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([]);
@@ -57,6 +59,7 @@ describe("Nethermind deployer deploy a new bot", () => {
         },
         contractAddress: "",
       } as any);
+      handleTransaction = provideHandleTransaction(DEPLOYER, CONTRACT_ADDRESS);
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([]);
@@ -71,6 +74,7 @@ describe("Nethermind deployer deploy a new bot", () => {
         contractAddress: CONTRACT_ADDRESS,
       } as any);
 
+      handleTransaction = provideHandleTransaction(DEPLOYER, CONTRACT_ADDRESS);
       const findings = await handleTransaction(mockTxEvent);
 
       expect(findings).toStrictEqual([

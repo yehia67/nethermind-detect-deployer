@@ -9,7 +9,7 @@ import {
 export const DEPLOYER = "0x88dC3a2284FA62e0027d6D6B1fCfDd2141a143b8";
 export const CONTRACT_ADDRESS = "0x61447385b019187daa48e91c55c02af1f1f3f863";
 
-const provideHandleTransaction = (
+export const provideHandleTransaction = (
   DEPLOYER: string,
   CONTRACT_ADDRESS: string
 ): HandleTransaction => {
